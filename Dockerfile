@@ -13,4 +13,5 @@ RUN npm install --prefix frontend
 # Copy the rest of the code
 COPY . .
 
+EXPOSE 3000
 CMD ["npm", "--prefix", "backend", "start"]

@@ -2,3 +2,5 @@ services:
   app:
     build: .
     command: npm --prefix backend start
+    ports:
+      - "3000:3000"
