@@ -1,3 +1,9 @@
+require('dotenv').config();
+// Environment variables loaded from `.env`:
+// - OPENAI_API_KEY: auth token for OpenAI API used in services/openai.js
+// - GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY: credentials for Google Sheets API
+// - GOOGLE_SHEET_ID: target spreadsheet for append operations
+
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
