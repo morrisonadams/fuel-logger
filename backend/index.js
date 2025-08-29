@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
+const { parseReceipt } = require('./services/openai');
+const { appendFuelRow } = require('./services/googleSheets');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,10 +14,32 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 // Handle form submissions
-app.post('/entries', upload.single('photo'), (req, res) => {
+app.post('/entries', upload.single('photo'), async (req, res) => {
   const { odometer, tripOdometer } = req.body;
   const photo = req.file ? req.file.filename : null;
-  res.json({ message: 'Entry received', odometer, tripOdometer, photo });
+
+  try {
+    const imagePath = path.join(__dirname, 'uploads', photo);
+    const parsed = await parseReceipt(imagePath);
+
+    await appendFuelRow({
+      odometer,
+      trip_odometer: tripOdometer,
+      litres: parsed.litres,
+      price_per_litre: parsed.price_per_litre,
+      total_cost: parsed.total_cost,
+      timestamp: new Date().toISOString()
+    });
+
+    res.json({
+      odometer,
+      tripOdometer,
+      photo,
+      ...parsed
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(PORT, () => {
