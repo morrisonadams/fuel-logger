@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuel Logger</title>
+</head>
+<body>
+  <h1>Fuel Logger Entry</h1>
+  <form action="/entries" method="POST" enctype="multipart/form-data">
+    <div>
+      <label for="odometer">Odometer:</label>
+      <input type="number" id="odometer" name="odometer" required />
+    </div>
+    <div>
+      <label for="tripOdometer">Trip Odometer:</label>
+      <input type="number" id="tripOdometer" name="tripOdometer" required />
+    </div>
+    <div>
+      <label for="photo">Photo:</label>
+      <input type="file" id="photo" name="photo" accept="image/*" />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
