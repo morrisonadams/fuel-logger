@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Fuel Logger Entry</h1>
-  <form action="/entries" method="POST" enctype="multipart/form-data">
+  <form id="fuel-form" action="/entries" method="POST" enctype="multipart/form-data">
     <div>
       <label for="odometer">Odometer:</label>
       <input type="number" id="odometer" name="odometer" required />
@@ -22,5 +22,47 @@
     </div>
     <button type="submit">Submit</button>
   </form>
+
+  <div id="loading" style="display: none;">Submitting...</div>
+  <div id="result"></div>
+  <div id="error" style="color: red;"></div>
+
+  <script>
+    const form = document.getElementById('fuel-form');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+    const error = document.getElementById('error');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      result.innerHTML = '';
+      error.textContent = '';
+      loading.style.display = 'block';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/entries', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Request failed');
+        }
+
+        result.innerHTML = `
+          <p>Litres: ${data.litres}</p>
+          <p>Price per litre: ${data.price_per_litre}</p>
+          <p>Total cost: ${data.total_cost}</p>
+        `;
+      } catch (err) {
+        error.textContent = err.message;
+      } finally {
+        loading.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
