@@ -16,7 +16,10 @@ async function callModel(model, imageBase64) {
             type: 'input_text',
             text: 'Extract litres, price per litre, and total cost from this fuel receipt image.'
           },
-          { type: 'input_image', image_base64: imageBase64, mime_type: 'image/jpeg' }
+          {
+            type: 'input_image',
+            image_url: { url: `data:image/jpeg;base64,${imageBase64}` }
+          }
         ]
       }
     ],
