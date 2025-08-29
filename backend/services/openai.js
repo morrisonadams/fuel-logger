@@ -6,7 +6,7 @@ const client = new OpenAI({
 });
 
 async function callModel(model, imageBase64) {
-  return client.responses.parse({
+  return client.responses.create({
     model,
     input: [
       {
@@ -14,20 +14,26 @@ async function callModel(model, imageBase64) {
         content: [
           {
             type: 'input_text',
-            text: 'Extract litres, price per litre, and total cost from this fuel receipt image. Respond with JSON matching the given schema.'
+            text: 'Extract litres, price per litre, and total cost from this fuel receipt image.'
           },
-          { type: 'input_image', image_base64: imageBase64 }
+          { type: 'input_image', image_base64: imageBase64, mime_type: 'image/jpeg' }
         ]
       }
     ],
-    schema: {
-      type: 'object',
-      properties: {
-        litres: { type: 'number' },
-        price_per_litre: { type: 'number' },
-        total_cost: { type: 'number' }
-      },
-      required: ['litres', 'price_per_litre', 'total_cost']
+    response_format: {
+      type: 'json_schema',
+      json_schema: {
+        name: 'FuelReceipt',
+        schema: {
+          type: 'object',
+          properties: {
+            litres: { type: 'number' },
+            price_per_litre: { type: 'number' },
+            total_cost: { type: 'number' }
+          },
+          required: ['litres', 'price_per_litre', 'total_cost']
+        }
+      }
     }
   });
 }
@@ -35,15 +41,9 @@ async function callModel(model, imageBase64) {
 async function parseReceipt(imagePath) {
   try {
     const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' });
-    let response;
-    try {
-      response = await callModel('gpt5-nano', imageBase64);
-    } catch (err) {
-      response = await callModel('gpt-4.1-mini', imageBase64);
-    }
-    const parsed = response.output?.[0]?.content?.[0]?.parsed;
+    const response = await callModel('gpt-4.1-mini', imageBase64);
+    const parsed = JSON.parse(response.output_text);
     if (
-      !parsed ||
       typeof parsed.litres !== 'number' ||
       typeof parsed.price_per_litre !== 'number' ||
       typeof parsed.total_cost !== 'number'
@@ -57,3 +57,4 @@ async function parseReceipt(imagePath) {
 }
 
 module.exports = { parseReceipt };
+
