@@ -20,18 +20,20 @@ async function callModel(model, imageBase64) {
         ]
       }
     ],
-    response_format: {
-      type: 'json_schema',
-      json_schema: {
-        name: 'FuelReceipt',
-        schema: {
-          type: 'object',
-          properties: {
-            litres: { type: 'number' },
-            price_per_litre: { type: 'number' },
-            total_cost: { type: 'number' }
-          },
-          required: ['litres', 'price_per_litre', 'total_cost']
+    text: {
+      format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'FuelReceipt',
+          schema: {
+            type: 'object',
+            properties: {
+              litres: { type: 'number' },
+              price_per_litre: { type: 'number' },
+              total_cost: { type: 'number' }
+            },
+            required: ['litres', 'price_per_litre', 'total_cost']
+          }
         }
       }
     }
