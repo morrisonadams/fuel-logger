@@ -10,25 +10,29 @@ const auth = new google.auth.JWT(
 const sheets = google.sheets({ version: 'v4', auth });
 
 async function appendFuelRow({
-  odometer,
-  trip_odometer,
+  timestamp,
+  station = '',
   litres,
   price_per_litre,
   total_cost,
-  timestamp
+  gst = '',
+  odometer,
+  trip_odometer
 }) {
   const values = [[
-    odometer,
-    trip_odometer,
+    timestamp,
+    station,
     litres,
     price_per_litre,
     total_cost,
-    timestamp
+    gst,
+    odometer,
+    trip_odometer
   ]];
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: 'Sheet1!A:F',
+    range: 'Sheet1!A:H',
     valueInputOption: 'USER_ENTERED',
     requestBody: { values }
   });

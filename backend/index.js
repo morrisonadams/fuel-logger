@@ -29,12 +29,14 @@ app.post('/entries', upload.single('photo'), async (req, res) => {
     const parsed = await parseReceipt(imagePath);
 
     await appendFuelRow({
-      odometer,
-      trip_odometer: tripOdometer,
+      timestamp: new Date().toISOString(),
+      station: '',
       litres: parsed.litres,
       price_per_litre: parsed.price_per_litre,
       total_cost: parsed.total_cost,
-      timestamp: new Date().toISOString()
+      gst: '',
+      odometer,
+      trip_odometer: tripOdometer
     });
 
     res.json({
