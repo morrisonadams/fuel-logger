@@ -30,11 +30,11 @@ app.post('/entries', upload.single('photo'), async (req, res) => {
 
     await appendFuelRow({
       timestamp: new Date().toISOString(),
-      station: '',
+      station: parsed.station,
       litres: parsed.litres,
       price_per_litre: parsed.price_per_litre,
       total_cost: parsed.total_cost,
-      gst: '',
+      gst: parsed.gst,
       odometer,
       trip_odometer: tripOdometer
     });
