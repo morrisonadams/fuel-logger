@@ -53,9 +53,11 @@
         }
 
         result.innerHTML = `
+          <p>Station: ${data.station}</p>
           <p>Litres: ${data.litres}</p>
           <p>Price per litre: ${data.price_per_litre}</p>
           <p>Total cost: ${data.total_cost}</p>
+          <p>GST: ${data.gst}</p>
         `;
       } catch (err) {
         error.textContent = err.message;
