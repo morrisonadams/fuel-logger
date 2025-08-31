@@ -37,6 +37,8 @@ The server hosts the static frontend and exposes a `POST /entries` endpoint for 
 2. `multer` stores the upload on disk.
 3. `parseReceipt` (using OpenAI) extracts `litres`, `price_per_litre`, and `total_cost` from the image.
 4. `appendFuelRow` appends the parsed data to the configured Google Sheet.
+   Rows are written in the following column order:
+   Date, Station, Litres, Price/L, Total Cost, GST, Odometer, Trip Odometer.
 
 ## Google API Setup
 
