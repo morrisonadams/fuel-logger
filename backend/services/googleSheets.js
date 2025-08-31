@@ -32,7 +32,7 @@ async function appendFuelRow({
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: 'Sheet1!A:H',
+    range: 'data!A:H',
     valueInputOption: 'USER_ENTERED',
     requestBody: { values }
   });
