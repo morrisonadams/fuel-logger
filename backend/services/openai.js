@@ -34,7 +34,8 @@ async function callModel(model, imageBase64) {
             price_per_litre: { type: 'number' },
             total_cost: { type: 'number' }
           },
-          required: ['litres', 'price_per_litre', 'total_cost']
+          required: ['litres', 'price_per_litre', 'total_cost'],
+          additionalProperties: false
         }
       }
     }
