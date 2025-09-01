@@ -14,4 +14,5 @@ COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 
 EXPOSE 3000
+ENTRYPOINT ["/init"]
 CMD ["/run.sh"]
