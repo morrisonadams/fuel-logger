@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/command/with-contenv bashio
 set -e
 
 export OPENAI_API_KEY="$(bashio::config 'OPENAI_API_KEY')"

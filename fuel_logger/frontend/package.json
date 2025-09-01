@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "echo frontend start",
     "test": "echo 'No frontend tests'"
