@@ -30,7 +30,7 @@ const dailyLimiter = rateLimit({
 });
 
 // Handle form submissions
-app.post('/entries', dailyLimiter, upload.single('photo'), async (req, res) => {
+  app.post('/entries', dailyLimiter, upload.single('photo'), async (req, res) => {
   const { odometer, tripOdometer } = req.body;
   const photo = req.file ? req.file.filename : null;
 
@@ -55,10 +55,11 @@ app.post('/entries', dailyLimiter, upload.single('photo'), async (req, res) => {
       photo,
       ...parsed
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+    } catch (error) {
+      console.error('[POST /entries] Error handling submission:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 app.listen(PORT, () => {
   console.log(`Backend server listening on port ${PORT}`);

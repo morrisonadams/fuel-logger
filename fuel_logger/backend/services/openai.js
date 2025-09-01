@@ -57,19 +57,30 @@ async function callModel(model, imageBase64) {
     });
 }
 
-// Extract the first JSON object found in a string. This helps us safely parse
-// model responses that may include additional commentary before or after the
-// JSON payload.
+
+// Extract the first JSON object found in a string. This guards against code
+// fences or extra commentary being included in the model response.
 function extractFirstJsonObject(text) {
-  const start = text.indexOf('{');
-  if (start === -1) {
-    return null;
+  // If the model wrapped the payload in a code fence (```json ... ```), prefer
+  // the fenced content as our starting point.
+  const fenceMatch = text.match(/```(?:json)?\n([\s\S]*?)```/i);
+  if (fenceMatch) {
+    const candidate = findBalancedJson(fenceMatch[1]);
+    if (candidate) return candidate;
   }
+  return findBalancedJson(text);
+}
+
+// Scan for the first balanced set of braces in a string and return that
+// substring. Returns null if no complete object is found.
+function findBalancedJson(str) {
+  const start = str.indexOf('{');
+  if (start === -1) return null;
   let depth = 0;
   let inString = false;
-  for (let i = start; i < text.length; i++) {
-    const char = text[i];
-    if (char === '"' && text[i - 1] !== '\\') {
+  for (let i = start; i < str.length; i++) {
+    const char = str[i];
+    if (char === '"' && str[i - 1] !== '\\') {
       inString = !inString;
     } else if (!inString) {
       if (char === '{') {
@@ -77,8 +88,7 @@ function extractFirstJsonObject(text) {
       } else if (char === '}') {
         depth--;
         if (depth === 0) {
-          return text.slice(start, i + 1);
-        }
+          return str.slice(start, i + 1);
       }
     }
   }
@@ -98,12 +108,17 @@ async function parseReceipt(imagePath) {
     console.log('[parseReceipt] Sending image to model');
     const response = await callModel('gpt-4.1-mini', imageBase64);
 
+
+    const text = (response && response.output_text ? response.output_text : '')
+      .trim();
+    console.log('[parseReceipt] Raw model output:', text);
+
     // The model should return pure JSON thanks to the json_schema option, but
     // in practice we occasionally see additional text or code fences wrapped
     // around the payload. Attempt to extract the first JSON object found in the
     // response before parsing so that trailing explanations do not cause a
     // SyntaxError such as "Unexpected non-whitespace character after JSON".
-    const text = response.output_text.trim();
+
     const json = extractFirstJsonObject(text);
     if (!json) {
       console.error('[parseReceipt] Model response did not contain JSON:', text);
