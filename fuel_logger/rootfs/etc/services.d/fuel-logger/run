@@ -1,5 +1,7 @@
 #!/command/with-contenv bashio
-set -e
+# shellcheck shell=bash
+
+bashio::log.info "Starting Fuel Logger service"
 
 export OPENAI_API_KEY="$(bashio::config 'OPENAI_API_KEY')"
 export GOOGLE_CLIENT_EMAIL="$(bashio::config 'GOOGLE_CLIENT_EMAIL')"

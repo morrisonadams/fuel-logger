@@ -10,9 +10,7 @@ COPY frontend /app/frontend
 RUN npm --prefix backend install \
     && npm --prefix frontend install
 
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+COPY rootfs /
 
 EXPOSE 3000
 ENTRYPOINT ["/init"]
-CMD ["/run.sh"]
