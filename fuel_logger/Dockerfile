@@ -13,4 +13,3 @@ RUN npm --prefix backend install \
 COPY rootfs /
 
 EXPOSE 3000
-ENTRYPOINT ["/init"]
