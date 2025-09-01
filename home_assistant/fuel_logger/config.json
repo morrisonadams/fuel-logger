@@ -1,0 +1,19 @@
+{
+  "name": "Fuel Logger",
+  "version": "1.0.0",
+  "slug": "fuel_logger",
+  "description": "Log fuel entries via Google Sheets and OpenAI",
+  "arch": ["amd64", "armv7", "aarch64", "i386"],
+  "startup": "services",
+  "boot": "auto",
+  "ports": {
+    "3000/tcp": 3000
+  },
+  "schema": {
+    "OPENAI_API_KEY": "str",
+    "GOOGLE_CLIENT_EMAIL": "str",
+    "GOOGLE_PRIVATE_KEY": "str",
+    "GOOGLE_SHEET_ID": "str",
+    "PORT": "int"
+  }
+}
