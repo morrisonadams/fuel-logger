@@ -57,6 +57,7 @@ async function callModel(model, imageBase64) {
     });
 }
 
+
 // Extract the first JSON object found in a string. This guards against code
 // fences or extra commentary being included in the model response.
 function extractFirstJsonObject(text) {
@@ -88,7 +89,6 @@ function findBalancedJson(str) {
         depth--;
         if (depth === 0) {
           return str.slice(start, i + 1);
-        }
       }
     }
   }
@@ -108,6 +108,7 @@ async function parseReceipt(imagePath) {
     console.log('[parseReceipt] Sending image to model');
     const response = await callModel('gpt-4.1-mini', imageBase64);
 
+
     const text = (response && response.output_text ? response.output_text : '')
       .trim();
     console.log('[parseReceipt] Raw model output:', text);
@@ -117,6 +118,7 @@ async function parseReceipt(imagePath) {
     // around the payload. Attempt to extract the first JSON object found in the
     // response before parsing so that trailing explanations do not cause a
     // SyntaxError such as "Unexpected non-whitespace character after JSON".
+
     const json = extractFirstJsonObject(text);
     if (!json) {
       console.error('[parseReceipt] Model response did not contain JSON:', text);
