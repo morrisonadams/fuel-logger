@@ -11,7 +11,7 @@ COPY frontend /app/frontend
 RUN npm --prefix backend install \
     && npm --prefix frontend install
 
-COPY run.sh /run.sh
+COPY fuel_logger/run.sh /run.sh
 RUN chmod a+x /run.sh
 
 EXPOSE 3000
