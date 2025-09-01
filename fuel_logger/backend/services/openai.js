@@ -87,8 +87,17 @@ function extractFirstJsonObject(text) {
 
 async function parseReceipt(imagePath) {
   try {
+    if (!fs.existsSync(imagePath)) {
+      console.error(`[parseReceipt] Image file not found: ${imagePath}`);
+      throw new Error(`Image not found at ${imagePath}`);
+    }
+
+    console.log(`[parseReceipt] Reading image from ${imagePath}`);
     const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+    console.log('[parseReceipt] Sending image to model');
     const response = await callModel('gpt-4.1-mini', imageBase64);
+
     // The model should return pure JSON thanks to the json_schema option, but
     // in practice we occasionally see additional text or code fences wrapped
     // around the payload. Attempt to extract the first JSON object found in the
@@ -97,9 +106,18 @@ async function parseReceipt(imagePath) {
     const text = response.output_text.trim();
     const json = extractFirstJsonObject(text);
     if (!json) {
+      console.error('[parseReceipt] Model response did not contain JSON:', text);
       throw new Error('Model response did not contain JSON');
     }
-    const parsed = JSON.parse(json);
+
+    let parsed;
+    try {
+      parsed = JSON.parse(json);
+    } catch (parseError) {
+      console.error('[parseReceipt] Failed to parse JSON:', parseError, json);
+      throw new Error(`Invalid JSON from model: ${parseError.message}`);
+    }
+
     if (
       typeof parsed.station !== 'string' ||
       typeof parsed.litres !== 'number' ||
@@ -107,12 +125,16 @@ async function parseReceipt(imagePath) {
       typeof parsed.total_cost !== 'number' ||
       typeof parsed.gst !== 'number'
     ) {
+      console.error('[parseReceipt] Missing required fields:', parsed);
       throw new Error(
         'Parsing failed: missing required fields in model response.'
       );
     }
+
+    console.log('[parseReceipt] Successfully parsed receipt:', parsed);
     return parsed;
   } catch (error) {
+    console.error('[parseReceipt] Error:', error);
     throw new Error(`Failed to parse receipt: ${error.message}`);
   }
 }
