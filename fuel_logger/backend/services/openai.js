@@ -1,11 +1,24 @@
 const fs = require('fs');
 const OpenAI = require('openai');
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazily create the OpenAI client so the server can start even when the
+// OPENAI_API_KEY environment variable is not configured. This prevents the
+// module from throwing during import which previously caused the entire
+// application to fail on startup with a 502 error.
+let client;
+function getClient() {
+  if (!client) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error('OPENAI_API_KEY is not set');
+    }
+    client = new OpenAI({ apiKey });
+  }
+  return client;
+}
 
 async function callModel(model, imageBase64) {
+  const client = getClient();
   return client.responses.create({
     model,
     input: [
