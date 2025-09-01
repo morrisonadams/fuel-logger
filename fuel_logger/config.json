@@ -6,6 +6,10 @@
   "arch": ["amd64", "armv7", "aarch64", "i386"],
   "startup": "services",
   "boot": "auto",
+  "build": {
+    "context": "..",
+    "dockerfile": "fuel_logger/Dockerfile"
+  },
   "ports": {
     "3000/tcp": 3000
   },
