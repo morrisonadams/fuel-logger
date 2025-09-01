@@ -14,6 +14,10 @@
   "ports": {
     "3000/tcp": 3000
   },
+  "ingress": true,
+  "ingress_port": 3000,
+  "panel_icon": "mdi:gas-station",
+  "panel_title": "Fuel Logger",
   "schema": {
     "OPENAI_API_KEY": "str",
     "GOOGLE_CLIENT_EMAIL": "str",

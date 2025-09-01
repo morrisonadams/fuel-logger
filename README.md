@@ -29,6 +29,14 @@ Provide values for these options in the add-on configuration:
 
 Map port `3000` of the add-on to a host port such as `3000:3000` so the UI is accessible.
 
+### Home Assistant Sidebar Panel
+
+When the add-on is running, Home Assistant automatically exposes the Fuel Logger
+frontend through an ingress panel in the left sidebar. Click the **Fuel Logger**
+icon to open the UI directly inside Home Assistant. No additional configuration
+is required, but you may still map port `3000` if you want to access the UI
+outside of Home Assistant.
+
 ## Environment Variables
 
 Copy `.env.example` to `.env` and provide values for:

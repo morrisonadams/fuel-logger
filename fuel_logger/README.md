@@ -28,5 +28,8 @@ Set the following options in the add-on configuration:
 ## Usage
 
 After starting the add-on, the backend listens on port `3000`. The frontend files are
-served by the backend and can be accessed through Home Assistant at `http://<homeassistant>:3000/`.
+served by the backend and are exposed inside Home Assistant via an ingress panel.
+The **Fuel Logger** icon appears in the sidebar; click it to open the UI within
+Home Assistant. You can still reach the interface externally at
+`http://<homeassistant>:3000/` if you mapped the port.
 
