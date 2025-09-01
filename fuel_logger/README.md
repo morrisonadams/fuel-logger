@@ -4,7 +4,7 @@ This add-on wraps the Fuel Logger application so it can run under Home Assistant
 
 ## Installation
 
-1. Copy the `home_assistant/fuel_logger` folder into your Home Assistant `addons` directory
+1. Copy the `fuel_logger` folder into your Home Assistant `addons` directory
    or add this repository as a custom add-on repository.
 2. Refresh the add-on store and install **Fuel Logger**.
 
