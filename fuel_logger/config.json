@@ -6,7 +6,6 @@
   "arch": ["amd64", "armv7", "aarch64", "i386"],
   "startup": "services",
   "boot": "auto",
-  "init": true,
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
