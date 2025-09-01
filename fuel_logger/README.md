@@ -16,7 +16,6 @@ Set the following options in the add-on configuration:
 - `GOOGLE_CLIENT_EMAIL` – Service account client email from Google Cloud.
 - `GOOGLE_PRIVATE_KEY` – Private key for the service account.
 - `GOOGLE_SHEET_ID` – ID of the Google Sheet used to store entries.
-- `PORT` – Port for the backend (defaults to `3000`).
 
 ## Obtaining API Keys
 
