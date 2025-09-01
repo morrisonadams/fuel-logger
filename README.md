@@ -4,11 +4,11 @@
 
 1. Install backend dependencies:
    ```bash
-   npm install --prefix backend
+   npm install --prefix fuel_logger/backend
    ```
 2. (Optional) Install frontend dependencies:
    ```bash
-   npm install --prefix frontend
+   npm install --prefix fuel_logger/frontend
    ```
 
 ## Home Assistant Add-on
@@ -44,7 +44,7 @@ Copy `.env.example` to `.env` and provide values for:
 Start the backend server:
 
 ```bash
-npm start --prefix backend
+npm start --prefix fuel_logger/backend
 ```
 
 The server hosts the static frontend and exposes a `POST /entries` endpoint for uploading receipt images.

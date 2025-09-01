@@ -1,6 +1,6 @@
 services:
   app:
     build: .
-    command: npm --prefix backend start
+    command: npm --prefix fuel_logger/backend start
     ports:
       - "3000:3000"
