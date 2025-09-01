@@ -11,6 +11,24 @@
    npm install --prefix frontend
    ```
 
+## Home Assistant Add-on
+
+1. In Home Assistant, open **Settings → Add-ons → Add-on store**.
+2. Click the menu in the top-right, choose **Repositories**, and add `https://github.com/morrisonadams/fuel-logger`.
+3. After adding the repository, install **Fuel Logger** from the add-on store.
+
+### Add-on Configuration
+
+Provide values for these options in the add-on configuration:
+
+- `OPENAI_API_KEY`
+- `GOOGLE_CLIENT_EMAIL`
+- `GOOGLE_PRIVATE_KEY`
+- `GOOGLE_SHEET_ID`
+- `PORT` (defaults to `3000`)
+
+Map port `3000` of the add-on to a host port such as `3000:3000` so the UI is accessible.
+
 ## Environment Variables
 
 Copy `.env.example` to `.env` and provide values for:
