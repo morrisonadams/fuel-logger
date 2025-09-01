@@ -12,7 +12,7 @@ const { parseReceipt } = require('./services/openai');
 const { appendFuelRow } = require('./services/googleSheets');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, '../frontend')));

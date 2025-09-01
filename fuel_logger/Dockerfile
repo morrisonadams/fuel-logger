@@ -12,4 +12,4 @@ RUN npm --prefix backend install \
 
 COPY rootfs /
 
-EXPOSE 3000
+EXPOSE 3001
