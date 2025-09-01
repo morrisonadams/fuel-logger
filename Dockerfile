@@ -13,5 +13,5 @@ RUN npm install --prefix fuel_logger/frontend
 # Copy the rest of the code
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 CMD ["npm", "--prefix", "fuel_logger/backend", "start"]

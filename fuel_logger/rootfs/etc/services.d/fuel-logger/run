@@ -13,7 +13,7 @@ export GOOGLE_SHEET_ID="$(bashio::config 'GOOGLE_SHEET_ID')"
 # mapped host port changes, avoiding Bad Gateway errors.
 PORT="$(bashio::addon.ingress_port 2>/dev/null)"
 if ! bashio::var.has_value "${PORT}"; then
-    PORT="3000"
+    PORT="3001"
 fi
 export PORT
 bashio::log.info "Listening on port ${PORT}"
