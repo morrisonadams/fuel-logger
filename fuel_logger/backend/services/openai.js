@@ -89,6 +89,7 @@ function findBalancedJson(str) {
         depth--;
         if (depth === 0) {
           return str.slice(start, i + 1);
+        }
       }
     }
   }
