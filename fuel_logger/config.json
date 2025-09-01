@@ -1,11 +1,13 @@
 {
   "name": "Fuel Logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "slug": "fuel_logger",
   "description": "Log fuel entries via Google Sheets and OpenAI",
   "arch": ["amd64", "armv7", "aarch64", "i386"],
   "startup": "services",
   "boot": "auto",
+  "init": false,
+
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
