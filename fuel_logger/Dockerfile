@@ -1,4 +1,5 @@
-FROM ghcr.io/home-assistant/base:latest
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+FROM ${BUILD_FROM}
 
 # Install Node.js
 RUN apt-get update \
