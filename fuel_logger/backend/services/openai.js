@@ -54,7 +54,35 @@ async function callModel(model, imageBase64) {
         }
       }
     }
-  });
+    });
+}
+
+// Extract the first JSON object found in a string. This helps us safely parse
+// model responses that may include additional commentary before or after the
+// JSON payload.
+function extractFirstJsonObject(text) {
+  const start = text.indexOf('{');
+  if (start === -1) {
+    return null;
+  }
+  let depth = 0;
+  let inString = false;
+  for (let i = start; i < text.length; i++) {
+    const char = text[i];
+    if (char === '"' && text[i - 1] !== '\\') {
+      inString = !inString;
+    } else if (!inString) {
+      if (char === '{') {
+        depth++;
+      } else if (char === '}') {
+        depth--;
+        if (depth === 0) {
+          return text.slice(start, i + 1);
+        }
+      }
+    }
+  }
+  return null;
 }
 
 async function parseReceipt(imagePath) {
@@ -67,12 +95,10 @@ async function parseReceipt(imagePath) {
     // response before parsing so that trailing explanations do not cause a
     // SyntaxError such as "Unexpected non-whitespace character after JSON".
     const text = response.output_text.trim();
-    const start = text.indexOf('{');
-    const end = text.lastIndexOf('}');
-    if (start === -1 || end === -1 || end <= start) {
+    const json = extractFirstJsonObject(text);
+    if (!json) {
       throw new Error('Model response did not contain JSON');
     }
-    const json = text.slice(start, end + 1);
     const parsed = JSON.parse(json);
     if (
       typeof parsed.station !== 'string' ||
