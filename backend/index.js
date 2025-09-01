@@ -6,6 +6,7 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 // - GOOGLE_SHEET_ID: target spreadsheet for append operations
 
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const multer = require('multer');
 const { parseReceipt } = require('./services/openai');
 const { appendFuelRow } = require('./services/googleSheets');
@@ -19,8 +20,17 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 // Configure file uploads
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
+// Limit each client to five submissions per day
+const dailyLimiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 5,
+  message: { error: 'Daily limit of 5 uploads reached. Try again tomorrow.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 // Handle form submissions
-app.post('/entries', upload.single('photo'), async (req, res) => {
+app.post('/entries', dailyLimiter, upload.single('photo'), async (req, res) => {
   const { odometer, tripOdometer } = req.body;
   const photo = req.file ? req.file.filename : null;
 
