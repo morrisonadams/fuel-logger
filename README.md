@@ -25,7 +25,6 @@ Provide values for these options in the add-on configuration:
 - `GOOGLE_CLIENT_EMAIL`
 - `GOOGLE_PRIVATE_KEY`
 - `GOOGLE_SHEET_ID`
-- `PORT` (defaults to `3000`)
 
 Map port `3000` of the add-on to a host port such as `3000:3000` so the UI is accessible.
 
@@ -45,7 +44,6 @@ Copy `.env.example` to `.env` and provide values for:
 - `GOOGLE_CLIENT_EMAIL` – service-account email for the Google Sheets API.
 - `GOOGLE_PRIVATE_KEY` – service-account private key (replace newline characters with `\n`).
 - `GOOGLE_SHEET_ID` – ID of the target Google Sheet.
-- `PORT` – (optional) port the server listens on; defaults to `3000`.
 
 ## Running the Server
 

@@ -23,7 +23,6 @@
     "OPENAI_API_KEY": "str",
     "GOOGLE_CLIENT_EMAIL": "str",
     "GOOGLE_PRIVATE_KEY": "str",
-    "GOOGLE_SHEET_ID": "str",
-    "PORT": "int"
+    "GOOGLE_SHEET_ID": "str"
   }
 }
