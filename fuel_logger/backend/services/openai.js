@@ -61,7 +61,19 @@ async function parseReceipt(imagePath) {
   try {
     const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' });
     const response = await callModel('gpt-4.1-mini', imageBase64);
-    const parsed = JSON.parse(response.output_text);
+    // The model should return pure JSON thanks to the json_schema option, but
+    // in practice we occasionally see additional text or code fences wrapped
+    // around the payload. Attempt to extract the first JSON object found in the
+    // response before parsing so that trailing explanations do not cause a
+    // SyntaxError such as "Unexpected non-whitespace character after JSON".
+    const text = response.output_text.trim();
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    if (start === -1 || end === -1 || end <= start) {
+      throw new Error('Model response did not contain JSON');
+    }
+    const json = text.slice(start, end + 1);
+    const parsed = JSON.parse(json);
     if (
       typeof parsed.station !== 'string' ||
       typeof parsed.litres !== 'number' ||
