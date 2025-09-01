@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.4
+- Ensure the service listens on the correct internal port to prevent Bad Gateway errors when the mapped host port changes.
+
 ## 1.0.3
 - Fix service script shebang to avoid s6-overlay PID 1 error.
 
