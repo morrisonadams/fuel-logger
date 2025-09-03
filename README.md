@@ -27,25 +27,14 @@ Provide values for these options in the add-on configuration:
 - `GOOGLE_SHEET_ID`
 
 Map port `3001` of the add-on to a host port such as `3001:3001` so the UI is accessible.
-The UI is then available directly at `http://<homeassistant>:3001/` and is no
-longer embedded via Home Assistant's ingress system.
 
-### Optional Home Assistant Panel
+### Home Assistant Sidebar Panel
 
-If you still want a sidebar entry, create a [panel iframe](https://www.home-assistant.io/integrations/panel_iframe/)
-in your Home Assistant configuration:
-
-```yaml
-panel_iframe:
-  fuel_logger:
-    title: "Fuel Logger"
-    icon: mdi:gas-station
-    url: "http://<homeassistant>:3001"
-    allow: "camera; microphone"
-```
-
-The `allow` attribute ensures the page can access the camera and microphone via
-`getUserMedia`.
+When the add-on is running, Home Assistant automatically exposes the Fuel Logger
+frontend through an ingress panel in the left sidebar. Click the **Fuel Logger**
+icon to open the UI directly inside Home Assistant. No additional configuration
+is required, but you may still map port `3001` if you want to access the UI
+outside of Home Assistant.
 
 ## Environment Variables
 

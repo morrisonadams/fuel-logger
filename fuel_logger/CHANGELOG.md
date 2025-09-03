@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.1.0
-- Disable Home Assistant ingress and expose the UI directly on port `3001`.
-- Document how to embed the interface with camera and microphone permissions.
-
 ## 1.0.4
 - Ensure the service listens on the correct internal port to prevent Bad Gateway errors when the mapped host port changes.
 

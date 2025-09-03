@@ -26,11 +26,9 @@ Set the following options in the add-on configuration:
 
 ## Usage
 
-After starting the add-on, the backend listens on port `3001`. The UI is available
-directly at `http://<homeassistant>:3001/` and is not embedded via Home Assistant's
-ingress system.
-
-To add a sidebar entry, create a [panel iframe](https://www.home-assistant.io/integrations/panel_iframe/)
-in your Home Assistant configuration and include `allow: "camera; microphone"` so the
-interface can access the device camera without prompting the user.
+After starting the add-on, the backend listens on port `3001`. The frontend files are
+served by the backend and are exposed inside Home Assistant via an ingress panel.
+The **Fuel Logger** icon appears in the sidebar; click it to open the UI within
+Home Assistant. You can still reach the interface externally at
+`http://<homeassistant>:3001/` if you mapped the port.
 
