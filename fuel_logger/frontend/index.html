@@ -19,8 +19,8 @@
         <input type="number" id="tripOdometer" name="tripOdometer" required />
       </div>
       <div>
-        <label for="photo">Photo:</label>
-        <input type="file" id="photo" name="photo" accept="image/*" />
+        <button type="button" id="take-photo">Take Photo</button>
+        <input type="file" id="photo" name="photo" accept="image/*" capture="environment" hidden />
       </div>
       <button type="submit">Submit</button>
     </form>
