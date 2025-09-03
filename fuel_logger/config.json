@@ -1,6 +1,6 @@
 {
   "name": "Fuel Logger",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "slug": "fuel_logger",
   "description": "Log fuel entries via Google Sheets and OpenAI",
   "arch": ["amd64", "armv7", "aarch64", "i386"],
@@ -15,10 +15,7 @@
   "ports": {
     "3001/tcp": 3001
   },
-  "ingress": true,
-  "ingress_port": 3001,
-  "panel_icon": "mdi:gas-station",
-  "panel_title": "Fuel Logger",
+  "webui": "http://[HOST]:[PORT:3001]",
   "schema": {
     "OPENAI_API_KEY": "str",
     "GOOGLE_CLIENT_EMAIL": "str",
