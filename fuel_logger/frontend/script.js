@@ -41,8 +41,46 @@ async function handleSubmit(e) {
 
 form.addEventListener('submit', handleSubmit);
 
-takePhotoButton.addEventListener('click', () => {
-  cameraInput.click();
+takePhotoButton.addEventListener('click', async () => {
+  if (navigator.mediaDevices?.getUserMedia) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      });
+
+      const video = document.createElement('video');
+      video.style.position = 'fixed';
+      video.style.top = '-10000px';
+      document.body.appendChild(video);
+      video.srcObject = stream;
+      await video.play();
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+
+      stream.getTracks().forEach((track) => track.stop());
+      video.remove();
+
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          showNotification('Unable to capture photo', true);
+          return;
+        }
+        const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        cameraInput.files = dt.files;
+        form.requestSubmit();
+      }, 'image/jpeg');
+    } catch (err) {
+      cameraInput.click();
+    }
+  } else {
+    cameraInput.click();
+  }
 });
 
 uploadPhotoButton.addEventListener('click', () => {
