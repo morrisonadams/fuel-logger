@@ -21,12 +21,16 @@
       <div>
         <button type="button" id="take-photo">Take Photo</button>
         <button type="button" id="upload-photo">Upload Photo</button>
-        <input type="file" id="camera-photo" name="photo" accept="image/*" capture="environment" hidden />
         <input type="file" id="gallery-photo" name="photo" accept="image/*" hidden />
       </div>
       <button type="submit">Submit</button>
     </form>
     <div id="loading" class="loading">Submitting...</div>
+  </div>
+  <div id="camera-modal" class="camera-modal">
+    <video id="camera-stream" autoplay></video>
+    <button type="button" id="capture-btn">Capture</button>
+    <button type="button" id="close-camera">Cancel</button>
   </div>
   <div id="notification" class="notification"></div>
   <script src="script.js"></script>
