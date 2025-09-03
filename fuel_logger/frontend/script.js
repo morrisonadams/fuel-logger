@@ -1,6 +1,8 @@
 const form = document.getElementById('fuel-form');
 const loading = document.getElementById('loading');
 const notification = document.getElementById('notification');
+const photoInput = document.getElementById('photo');
+const takePhotoButton = document.getElementById('take-photo');
 
 function showNotification(message, isError = false) {
   notification.textContent = message;
@@ -9,7 +11,7 @@ function showNotification(message, isError = false) {
   setTimeout(() => notification.classList.remove('show'), 3000);
 }
 
-form.addEventListener('submit', async (e) => {
+async function handleSubmit(e) {
   e.preventDefault();
   loading.style.display = 'block';
 
@@ -27,9 +29,22 @@ form.addEventListener('submit', async (e) => {
     }
 
     showNotification('Entry submitted successfully');
+    form.reset();
   } catch (err) {
     showNotification(err.message, true);
   } finally {
     loading.style.display = 'none';
+  }
+}
+
+form.addEventListener('submit', handleSubmit);
+
+takePhotoButton.addEventListener('click', () => {
+  photoInput.click();
+});
+
+photoInput.addEventListener('change', () => {
+  if (photoInput.files.length > 0) {
+    form.requestSubmit();
   }
 });
