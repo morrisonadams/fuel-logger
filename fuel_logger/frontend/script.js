@@ -62,6 +62,7 @@ takePhotoButton.addEventListener('click', async () => {
       audio: false,
     });
     cameraStream.srcObject = stream;
+    await cameraStream.play();
     cameraModal.classList.add('show');
   } catch (err) {
     showNotification('Camera access denied', true);
